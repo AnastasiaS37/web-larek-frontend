@@ -2,18 +2,30 @@ import { IItem } from "../../types";
 import { IEvents } from "../base/events";
 
 export class ItemsData {
-    protected ItemsArray: IItem[];
+    protected ItemsArray: IItem[] = [];
     protected SelectedCard: IItem;
 
-    constructor(protected events: IEvents) {
+    constructor(protected events: IEvents) {}
 
+    setItems(items: IItem[]) {
+        this.ItemsArray = items;
+        this.events.emit('items:changed');
     }
 
-    setItems(items: IItem[]) {}
+    getItems(): IItem[] {
+        return this.ItemsArray;
+    }
 
-    getItems(): IItem[] {}
+    setItem(item: IItem) {
+        this.SelectedCard = item;
+        this.events.emit(`card:selected`);
+    }
 
-    setItem(item: IItem) {}
+    getItem(): IItem {
+        return this.SelectedCard;
+    }
 
-    getItem(): IItem {}
+    getItemById(id: string): IItem {
+        return this.ItemsArray.find(item => item.id === id);
+    }
 }

@@ -3,7 +3,8 @@ import { Component } from "../base/Component";
 import { EventEmitter } from "../base/events";
 
 interface IGallery {
-    catalog: HTMLElement[]
+    catalog: HTMLElement[],
+    locked: boolean
 }
 
 export class Gallery extends Component<IGallery> {
@@ -15,7 +16,15 @@ export class Gallery extends Component<IGallery> {
     }
 
     set catalog(items: HTMLElement[]) {
-        this.catalogElement.replaceChildren(...items); // ??
+        this.catalogElement.replaceChildren(...items);
+    }
+
+    set locked(value: boolean) {
+        if (value) {
+            this.container.classList.add('page__wrapper_locked');
+        } else {
+            this.container.classList.remove('page__wrapper_locked');
+        }
     }
 
 }

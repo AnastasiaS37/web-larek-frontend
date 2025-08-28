@@ -10,13 +10,14 @@ export interface IItem {
 export interface ICustomer {
     email: string;
     phone: string;
-    payment: 'online' | 'cash' | '';
+    payment: "online" | "cash" | "";
     address: string;
 }
 
-export interface IItemList extends IItem {
-    total: number;
-}
+// export interface IItemList extends IItem {
+//     total: number;
+//     items: IItem[];
+// }
 
 export interface IOrder extends ICustomer {
     total: number;

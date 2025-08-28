@@ -15,13 +15,11 @@ export class Header extends Component<IHeader> {
         this.counterElement = ensureElement('.header__basket-counter', this.container);
         this.basketButton = ensureElement('.header__basket', this.container) as HTMLButtonElement;
 
-        this.basketButton.addEventListener('click', () => {
-            this.events.emit('basket:open');
-        });
+        this.basketButton.addEventListener('click', () => this.events.emit('basket:open'));
     }
 
     set counter(value: number) {
-        this.setText(this.counterElement, String(value));
+        this.setText(this.counterElement, value);
     }
 
 }

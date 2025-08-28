@@ -2,21 +2,34 @@ import { IItem } from "../../types";
 import { IEvents } from "../base/events";
 
 export class BasketData {
-    protected ItemsArray: IItem[];
+    protected ItemsArray: IItem[] = [];
     
-    constructor(protected events: IEvents) {
-    
+    constructor(protected events: IEvents) {}
+
+    getItems(): IItem[] {
+        return this.ItemsArray;
     }
 
-    getItems(): IItem[] {}
+    addItem(item: IItem) {
+        this.ItemsArray.push(item);
+        this.events.emit('basket:changed');
+    }
 
-    addItem(item: IItem) {}
+    deleteItem(id: string) {
+        this.ItemsArray = this.ItemsArray.filter(item => item.id !== id);
+        this.events.emit('basket:changed');
+    }
 
-    deleteItem(id: number) {}
+    getTotalPrice(): number {
+        return this.ItemsArray.reduce((sum, item) => sum + item.price, 0);
+    }
 
-    getTotalPrice(): number {}
-
-    getTotalItems(): number {}
+    getTotalItems(): number {
+        return this.ItemsArray.length;
+    }
     
-    isInBasket(id: number): boolean {}
+    isInBasket(id: string): boolean {
+        return this.ItemsArray.some(item => item.id === id);
+    }
+
 }

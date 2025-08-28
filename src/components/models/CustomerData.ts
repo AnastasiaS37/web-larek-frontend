@@ -11,9 +11,17 @@ export class CustomerData {
 
     }
 
-    setData(data: ICustomer) {}
+    setData(data: ICustomer) {
+        Object.assign(this as object, data)
+        // this.email = data.email;
+        // this.phone = data.phone;
+        // this.payment = data.payment;
+        // this.address = data.address;
+    }
 
-    getData(): ICustomer {}
+    getData(): ICustomer {
+        return this;
+    }
 
     validateData(data: ICustomer) {}
 }

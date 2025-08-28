@@ -14,7 +14,7 @@ export class Form extends Component<Partial<IForm>> {
 
     constructor(container: HTMLElement, protected events: EventEmitter) {
         super(container);
-        this.buttonElement = ensureElement('.button', this.container) as HTMLButtonElement;
+        this.buttonElement = ensureElement('button[type="submit"]', this.container) as HTMLButtonElement;
     }
 
     set valid(value: boolean) {}
