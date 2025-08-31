@@ -7,17 +7,17 @@ export interface IItem {
     description: string;
 }
 
+export interface IForm {
+    valid: boolean;
+    errors: string[];
+}
+
 export interface ICustomer {
     email: string;
     phone: string;
     payment: "online" | "cash" | "";
     address: string;
 }
-
-// export interface IItemList extends IItem {
-//     total: number;
-//     items: IItem[];
-// }
 
 export interface IOrder extends ICustomer {
     total: number;

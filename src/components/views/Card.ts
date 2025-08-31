@@ -40,7 +40,6 @@ export class Card extends Component<Partial<IComponent>> {
 export class GalleryItem extends Card {
     protected itemImage: HTMLImageElement;
     protected itemCategory: HTMLElement;
-    protected itemButton: HTMLButtonElement;
 
     constructor(container: HTMLElement, protected events: EventEmitter) {
         super(container, events);
@@ -90,6 +89,7 @@ export class ModalItem extends GalleryItem {
             this.setDisabled(this.itemButton, false);
         }
     }
+    
 }
 
 export class BasketItem extends Card {

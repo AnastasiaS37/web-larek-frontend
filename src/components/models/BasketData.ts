@@ -32,4 +32,10 @@ export class BasketData {
         return this.ItemsArray.some(item => item.id === id);
     }
 
+    clearBasket() {
+        this.ItemsArray.forEach(item => {
+            this.deleteItem(item.id);
+        });
+    }
+
 }
