@@ -10,7 +10,7 @@ interface IGallery {
 export class Gallery extends Component<IGallery> {
     protected catalogElement: HTMLElement;
 
-    constructor(container: HTMLElement, protected events: EventEmitter) {
+    constructor(protected container: HTMLElement, protected events: EventEmitter) {
         super(container);
         this.catalogElement = ensureElement('.gallery', this.container);
     }

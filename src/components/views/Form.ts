@@ -53,7 +53,7 @@ export class OrderForm extends Form<Partial<ICustomer>> {
     protected cashButtonElement: HTMLButtonElement;
     protected adressInput: HTMLInputElement;
 
-    constructor(container: HTMLFormElement, protected events: EventEmitter) {
+    constructor(protected container: HTMLFormElement, protected events: EventEmitter) {
         super(container, events);
         this.cardButtonElement = ensureElement('button[name="card"]', this.container) as HTMLButtonElement;
         this.cashButtonElement = ensureElement('button[name="cash"]', this.container) as HTMLButtonElement;
@@ -85,7 +85,7 @@ export class ContactForm extends Form<Partial<ICustomer>> {
     protected emailInput: HTMLInputElement;
     protected phoneInput: HTMLInputElement;
 
-    constructor(container: HTMLFormElement, protected events: EventEmitter) {
+    constructor(protected container: HTMLFormElement, protected events: EventEmitter) {
         super(container, events);
         this.emailInput = ensureElement('input[name="email"]', this.container) as HTMLInputElement;
         this.phoneInput = ensureElement('input[name="phone"]', this.container) as HTMLInputElement;

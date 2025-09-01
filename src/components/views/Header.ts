@@ -10,7 +10,7 @@ export class Header extends Component<IHeader> {
     protected counterElement: HTMLElement;
     protected basketButton: HTMLButtonElement;
 
-    constructor(container: HTMLElement, protected events: EventEmitter) {
+    constructor(protected container: HTMLElement, protected events: EventEmitter) {
         super(container);
         this.counterElement = ensureElement('.header__basket-counter', this.container);
         this.basketButton = ensureElement('.header__basket', this.container) as HTMLButtonElement;

@@ -13,7 +13,7 @@ export class Success extends Component<ISuccess> {
     protected descriptionElement: HTMLElement;
     protected successCloseButton: HTMLButtonElement;
 
-    constructor(container: HTMLElement, actions: ISuccessActions) {
+    constructor(protected container: HTMLElement, actions: ISuccessActions) {
         super(container);
 
         this.successCloseButton = ensureElement('.order-success__close', this.container) as HTMLButtonElement;
