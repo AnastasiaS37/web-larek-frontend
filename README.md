@@ -20,7 +20,7 @@ This project focuses on building a modular frontend architecture using TypeScrip
 
 * Integrated modal windows
 * Implemented order form validation
-* Organized project using MVP architecture
+* Organized project using MVP architecture (full project architecture description can be found [here](./Architecture_description.md)).
 
 ## 🏷️ Topics
 
