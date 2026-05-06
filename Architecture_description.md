@@ -110,14 +110,16 @@ The `Component` class is the base for all view classes. It takes a generic type 
 The `Header` class is responsible for rendering the site header. It sets the cart counter value and attaches a listener to the cart icon.
 Fields:
 - counterElement: HTMLElement - counter element
-- basketButton: HTMLButtonElement - cart element <br>
+- basketButton: HTMLButtonElement - cart element
+
 Method:
 - set counter(value: number) - sets the counter value
 
 #### Gallery
 The `Gallery` class is responsible for rendering the list of product cards (catalog).
 Field:
-- catalogElement: HTMLElement - catalog element <br>
+- catalogElement: HTMLElement - catalog element
+
 Methods:
 - set catalog(items: HTMLElement[]) — inserts card elements into the container
 - set locked(value: boolean) - locks/unlocks page scrolling when a modal window is open
@@ -127,6 +129,7 @@ The `Modal` class is responsible for rendering a modal window, the content of wh
 Fields:
 - contentElement: HTMLElement - modal window element
 - closeButton: HTMLButtonElement - modal window close button
+
 Methods:
 - set content(item: HTMLElement) - inserts content into the container
 - open() - opens the modal window and emits a corresponding event
@@ -138,6 +141,7 @@ The `Success` class is responsible for displaying the successful purchase window
 Fields:
 - descriptionElement: HTMLElement
 - closeButton: HTMLButtonElement
+
 Method:
 - set total(value: number) - sets the message with purchase total price
 
@@ -147,6 +151,7 @@ Fields:
 - contentElement: HTMLElement
 - basketButton: HTMLButtonElement
 - priceElement: HTMLElement
+
 Methods:
 - set content(items: HTMLElement[]) - sets into the container the array of HTML elements (product cards) passed as a parameter, or (in the case of an empty array) displays a message about the absence of products in the cart
 - set price(value: number) - sets the total price value of the cart
@@ -157,6 +162,7 @@ Fields:
 - itemTitle: HTMLElement
 - itemPrice: HTMLElement
 - itemId: string
+
 Methods:
 - set title(value: string) - sets the card title (product name)
 - set price(value: number | null) - sets the product price; can take a number or null for a free product
@@ -167,6 +173,7 @@ The `GalleryItem` class inherits from `Card` and is responsible for displaying a
 Fields:
 - itemImage: HTMLImageElement
 - itemCategory: HTMLElement
+
 Methods:
 - set image(value: string) - sets the product image
 - set category(value: string) - sets the product category
@@ -176,6 +183,7 @@ The `ModalItem` class inherits from `GalleryItem` and is responsible for display
 Fields:
 - itemDescription: HTMLElement
 - itemButton: HTMLButtonElement
+
 Methods:
 - set description(value: string) - sets the product description
 - set buttonText(value: string) - sets the button text for adding/removing a product from the cart depending on its presence there
@@ -186,6 +194,7 @@ The `BasketItem` class inherits from `Card` and is responsible for displaying a 
 Fields:
 - itemButton: HTMLButtonElement
 - itemIndex: HTMLElement
+
 Method:
 - set itemNumber(value: number) - sets the sequential number of the product in the cart
 
@@ -194,6 +203,7 @@ The `Form` class is a base class for `OrderForm` and `ContactForm`, which are re
 Fields:
 - buttonElement: HTMLButtonElement
 - errorElement: HTMLElement
+
 Methods:
 - onInputChange(field: keyof T, value: string) - generates events with different names and parameters depending on the passed arguments
 - set valid(value: boolean) - changes the button state depending on form validation
@@ -206,6 +216,7 @@ Fields:
 - cardButtonElement: HTMLButtonElement
 - cashButtonElement: HTMLButtonElement
 - adressInput: HTMLInputElement
+
 Methods:
 - changeButtonState(isCard: boolean, isCash: boolean) - visualises the selected payment type
 - set address(value: string) - sets the delivery address
@@ -215,6 +226,7 @@ The `ContactForm` class inherits from `Form` and is responsible for displaying t
 Fields:
 - emailInput: HTMLInputElement
 - phoneInput: HTMLInputElement
+
 Methods:
 - set email(value: string) - sets the user email
 - set phone(value: string) - sets the user phone number
