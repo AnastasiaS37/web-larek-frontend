@@ -1,7 +1,7 @@
 # Project Structure:
-- src/ — source files of the project
-- src/components/ — JS components
-- src/components/base/ — base code
+- src/ - source files of the project
+- src/components/ - JS components
+- src/components/base/ - base code
 
 Important files:
 - src/pages/index.html — main page
@@ -59,18 +59,17 @@ Main methods:
 The ItemsData class is responsible for storing the array of all products (catalog) and the product card selected by the user for viewing. Fields:
 - protected field `ItemsArray` - stores an array of objects of type `IItem`
 - protected field `SelectedCard` - stores an object of type `IItem` (the selected card) <br>
-The class constructor accepts an instance of the event broker. <br>
 Methods:
 - `setItems`, which takes an array of objects of type `IItem` as a parameter — allows saving the array of products
 - `getItems`, which returns an array of objects of type `IItem` — allows retrieving the array of products
 - `setItem`, which takes an object of type `IItem` as a parameter — allows saving the product card selected by the user
 - `getItem`, which returns an object of type `IItem` — allows retrieving the selected product card
 - `getItemById`, which takes a product id (string) as a parameter and returns an object of type `IItem` — allows retrieving a product card by its id
+The class constructor accepts an instance of the event broker.
 
 #### BasketData
 The Basket class is responsible for storing the array of products in the cart. Fields:
 - protected field `ItemsArray` - stores an array of objects of type `IItem` <br>
-The class constructor accepts an instance of the event broker. <br>
 Methods:
 - `getItems`, which returns an array of objects of type `IItem` — allows retrieving products in the cart
 - `addItem`, which takes an object of type `IItem` — allows adding a product to the cart
@@ -79,6 +78,7 @@ Methods:
 - `getTotalItems`, which returns a number — allows retrieving the number of products in the cart
 - `isInBasket`, which takes a product id and returns a boolean — allows checking if a product is in the cart
 - `clearBasket` - clears the cart
+The class constructor accepts an instance of the event broker.
 
 #### CustomerData
 The CustomerData class is responsible for storing customer data. Fields:
@@ -87,12 +87,12 @@ The CustomerData class is responsible for storing customer data. Fields:
 - `ayment` - has type `TPayment` and can take one of three values: 'online', 'cash', or '' (empty string)
 - `address` - stores a value of type string
 - `formErrors` - is an object of type `Partial<Record<keyof ICustomer, string>>`, stores validation errors <br>
-The class constructor accepts an instance of the event broker. <br>
 Methods:
 - `setField`, which takes one of the keys of `ICustomer` and a string value — allows saving customer data
 - `getUserData`, which returns an object of type `ICustomer` — allows retrieving customer data
 - `validateData` - returns a `formErrors` object containing validation errors
 - `clearData` - clears the stored customer data
+The class constructor accepts an instance of the event broker.
 
 ### View Layer
 All view classes are responsible for rendering the passed data inside a container (DOM element).
