@@ -109,127 +109,127 @@ The `Component` class is the base for all view classes. It takes a generic type 
 #### Header
 The `Header` class is responsible for rendering the site header. It sets the cart counter value and attaches a listener to the cart icon.
 Fields:
-- counterElement: HTMLElement - counter element
-- basketButton: HTMLButtonElement - cart element
+- `counterElement`: HTMLElement - counter element
+- `basketButton`: HTMLButtonElement - cart element
 
 Method:
-- set counter(value: number) - sets the counter value
+- `set counter`(value: number) - sets the counter value
 
 #### Gallery
 The `Gallery` class is responsible for rendering the list of product cards (catalog).
 Field:
-- catalogElement: HTMLElement - catalog element
+- `catalogElement`: HTMLElement - catalog element
 
 Methods:
-- set catalog(items: HTMLElement[]) — inserts card elements into the container
-- set locked(value: boolean) - locks/unlocks page scrolling when a modal window is open
+- `set catalog`(items: HTMLElement[]) — inserts card elements into the container
+- `set locked`(value: boolean) - locks/unlocks page scrolling when a modal window is open
 
 #### Modal
 The `Modal` class is responsible for rendering a modal window, the content of which may vary depending on the selected template. It attaches listeners to the close button and overlay clicks.
 Fields:
-- contentElement: HTMLElement - modal window element
-- closeButton: HTMLButtonElement - modal window close button
+- `contentElement`: HTMLElement - modal window element
+- `closeButton`: HTMLButtonElement - modal window close button
 
 Methods:
-- set content(item: HTMLElement) - inserts content into the container
-- open() - opens the modal window and emits a corresponding event
-- close() - closes the modal window and emits a corresponding event
-- render() - extends render method of base class by adding the modal window opening
+- `set content`(item: HTMLElement) - inserts content into the container
+- `open`() - opens the modal window and emits a corresponding event
+- `close`() - closes the modal window and emits a corresponding event
+- `render`() - extends render method of base class by adding the modal window opening
 
 #### Success
 The `Success` class is responsible for displaying the successful purchase window. It attaches a listener to the continue button.
 Fields:
-- descriptionElement: HTMLElement
-- closeButton: HTMLButtonElement
+- `descriptionElement`: HTMLElement
+- `closeButton`: HTMLButtonElement
 
 Method:
-- set total(value: number) - sets the message with purchase total price
+- `set total`(value: number) - sets the message with purchase total price
 
 #### Basket
 The `Basket` class is responsible for displaying the cart with selected products. It allows displaying a list of product cards and the total cost of the products in the cart.
 Fields:
-- contentElement: HTMLElement
-- basketButton: HTMLButtonElement
-- priceElement: HTMLElement
+- `contentElement`: HTMLElement
+- `basketButton`: HTMLButtonElement
+- `priceElement`: HTMLElement
 
 Methods:
-- set content(items: HTMLElement[]) - sets into the container the array of HTML elements (product cards) passed as a parameter, or (in the case of an empty array) displays a message about the absence of products in the cart
-- set price(value: number) - sets the total price value of the cart
+- `set content`(items: HTMLElement[]) - sets into the container the array of HTML elements (product cards) passed as a parameter, or (in the case of an empty array) displays a message about the absence of products in the cart
+- `set price`(value: number) - sets the total price value of the cart
 
 #### Card
 The `Card` class is a base class for `GalleryItem`, `ModalItem` and `BasketItem`, which are responsible for displaying a product card in different variants.
 Fields:
-- itemTitle: HTMLElement
-- itemPrice: HTMLElement
-- itemId: string
+- `itemTitle`: HTMLElement
+- `itemPrice`: HTMLElement
+- `itemId`: string
 
 Methods:
-- set title(value: string) - sets the card title (product name)
-- set price(value: number | null) - sets the product price; can take a number or null for a free product
-- set id(value: string) - sets the product id in order to pass it when generating events in child classes
+- `set title`(value: string) - sets the card title (product name)
+- `set price`(value: number | null) - sets the product price; can take a number or null for a free product
+- `set id`(value: string) - sets the product id in order to pass it when generating events in child classes
 
 #### GalleryItem
 The `GalleryItem` class inherits from `Card` and is responsible for displaying a product card in the product catalog. It sets a listener for clicking on the card.
 Fields:
-- itemImage: HTMLImageElement
-- itemCategory: HTMLElement
+- `itemImage`: HTMLImageElement
+- `itemCategory`: HTMLElement
 
 Methods:
-- set image(value: string) - sets the product image
-- set category(value: string) - sets the product category
+- `set image`(value: string) - sets the product image
+- `set category`(value: string) - sets the product category
 
 #### ModalItem
 The `ModalItem` class inherits from `GalleryItem` and is responsible for displaying a product card in a modal window. It sets a listener for clicking the add-to-cart button.
 Fields:
-- itemDescription: HTMLElement
-- itemButton: HTMLButtonElement
+- `itemDescription`: HTMLElement
+- `itemButton`: HTMLButtonElement
 
 Methods:
-- set description(value: string) - sets the product description
-- set buttonText(value: string) - sets the button text for adding/removing a product from the cart depending on its presence there
-- set price(value: number | null) - extends the parent price method, making the add-to-cart button unavailable for a null-price product
+- `set description`(value: string) - sets the product description
+- `set buttonText`(value: string) - sets the button text for adding/removing a product from the cart depending on its presence there
+- `set price`(value: number | null) - extends the parent price method, making the add-to-cart button unavailable for a null-price product
 
 #### BasketItem
 The `BasketItem` class inherits from `Card` and is responsible for displaying a product card in the cart. It sets a listener on the remove button.
 Fields:
-- itemButton: HTMLButtonElement
-- itemIndex: HTMLElement
+- `itemButton`: HTMLButtonElement
+- `itemIndex`: HTMLElement
 
 Method:
-- set itemNumber(value: number) - sets the sequential number of the product in the cart
+- `set itemNumber`(value: number) - sets the sequential number of the product in the cart
 
 #### Form
 The `Form` class is a base class for `OrderForm` and `ContactForm`, which are responsible for displaying purchase forms. It sets an input event listener on form fields and a click listener on form submission.
 Fields:
-- buttonElement: HTMLButtonElement
-- errorElement: HTMLElement
+- `buttonElement`: HTMLButtonElement
+- `errorElement`: HTMLElement
 
 Methods:
-- onInputChange(field: keyof T, value: string) - generates events with different names and parameters depending on the passed arguments
-- set valid(value: boolean) - changes the button state depending on form validation
-- set errors(value: string[]) - displays error text when the form is filled incorrectly
-- render(state: Partial<T> & Partial<IForm>) - extends the base class render method by adding the display of error messages
+- `onInputChange`(field: keyof T, value: string) - generates events with different names and parameters depending on the passed arguments
+- `set valid`(value: boolean) - changes the button state depending on form validation
+- `set errors`(value: string[]) - displays error text when the form is filled incorrectly
+- `render`(state: Partial<T> & Partial<IForm>) - extends the base class render method by adding the display of error messages
 
 #### OrderForm
 The `OrderForm` class inherits from `Form` and is responsible for displaying the order form. It sets listeners on the buttons for selecting the payment type.
 Fields:
-- cardButtonElement: HTMLButtonElement
-- cashButtonElement: HTMLButtonElement
-- adressInput: HTMLInputElement
+- `cardButtonElement`: HTMLButtonElement
+- `cashButtonElement`: HTMLButtonElement
+- `adressInput`: HTMLInputElement
 
 Methods:
-- changeButtonState(isCard: boolean, isCash: boolean) - visualises the selected payment type
-- set address(value: string) - sets the delivery address
+- `changeButtonState`(isCard: boolean, isCash: boolean) - visualises the selected payment type
+- `set address`(value: string) - sets the delivery address
 
 #### ContactForm
 The `ContactForm` class inherits from `Form` and is responsible for displaying the contact form.
 Fields:
-- emailInput: HTMLInputElement
-- phoneInput: HTMLInputElement
+- `emailInput`: HTMLInputElement
+- `phoneInput`: HTMLInputElement
 
 Methods:
-- set email(value: string) - sets the user email
-- set phone(value: string) - sets the user phone number
+- `set email`(value: string) - sets the user email
+- `set phone`(value: string) - sets the user phone number
 
 ### Communication Layer
 
