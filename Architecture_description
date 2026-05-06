@@ -1,18 +1,18 @@
-Структура проекта:
-- src/ — исходные файлы проекта
-- src/components/ — папка с JS компонентами
-- src/components/base/ — папка с базовым кодом
+Project Structure:
+- src/ — source files of the project
+- src/components/ — JS components
+- src/components/base/ — base code
 
-Важные файлы:
-- src/pages/index.html — HTML-файл главной страницы
-- src/types/index.ts — файл с типами
-- src/index.ts — точка входа приложения
-- src/scss/styles.scss — корневой файл стилей
-- src/utils/constants.ts — файл с константами
-- src/utils/utils.ts — файл с утилитами
+Important files:
+- src/pages/index.html — main page
+- src/types/index.ts — types file
+- src/index.ts — application entry point
+- src/scss/styles.scss — root styles file
+- src/utils/constants.ts — constants file
+- src/utils/utils.ts — utilities file
 
-## Типы данных, используемые в приложении
-Интерфейс `IItem` для учёта товаров в приложении:
+## Data Types Used in the Application
+`IItem` interface for product accounting:
 interface IItem {
     id: string;
     title: string;
@@ -22,7 +22,7 @@ interface IItem {
     description: string;
 }
 
-Интерфейс `ICustomer` для учёта данных пользователя:
+`ICustomer` interface for storing user data:
 interface ICustomer {
     email: string;
     phone: string;
@@ -30,220 +30,220 @@ interface ICustomer {
     address: string;
 }
 
-## Архитектура приложения
+## Application Architecture
 
-Архитектура проекта разрабатывается с использованием паттерна MVP, в котором основными слоями являются:
-1. Слой данных, отвечающий за работу с данными (хранение и изменение).
-2. Слой представления, отвечающий за отображение данных на старнице.
-3. Презенетер, отвечающий за связь данных и представления.
+The project uses the MVP (Model-View-Presenter) pattern with the following layers:
+1. Data Layer — responsible for storing and managing data
+2. View Layer — responsible for rendering data in the UI
+3. Presenter — connects the data and the view
 
-### Базовые классы
+### Base Classes
 
-#### Класс EventEmitter
-Класс `EventEmitter` обеспечивает работу событий. Он позволяет отправлять события и подписываться на них. Данный класс используется в слоях приложения для генерации событий и в презентере для обработки событий.
-Основные методы класса:
-- `on` - установка обработчика на событие
-- `off` - снятие обработчика с события
-- `emit` - инициализация события
-- `trigger` - возвращает функцию, при вызове которой инициализируется требуемое событие
+#### EventEmitter
+Provides event handling. Allows emitting events and subscribing to them. This class is used in application layers to generate events and in the presenter to handle them.
+Main methods:
+- `on` - sets an event handler
+- `off` - removes an event handler
+- `emit` - emits an event
+- `trigger` - returns a function that triggers the required event when called
 
-#### Класс Api
-Класс `Api` реализует базовую логику отправки запросов. В конструктор передается базовый адрес сервера и опциональный объект с заголовками запросов.
-Основные методы класса: 
-- `get` - выполняет GET запрос и возвращает промис с ответом сервера
-- `post` - принимает объект с данными и отправляет эти данные на сервер. По умолчанию выполняется `POST` запрос, но метод запроса может быть переопределен заданием третьего параметра при вызове.
+#### Api
+Implements the base logic for sending requests. The constructor receives the base server URL and an optional object with request headers.
+Main methods:
+- `get` - performs a GET request and returns a promise with the server response
+- `post` - takes a data object and sends it to the server. By default, performs a POST request, but the method can be overridden by passing a third parameter
 
-### Слой данных
+### Data Layer
 
-#### Класс ItemsData
-Класс `ItemsData` отвечает за хранение массива всех товаров (каталог) и выбранной пользователем для просмотра карточки. У класса есть следующие поля:
-- защищённое поле `ItemsArray`, в котором хранится массив объектов типа `IItem`
-- защищённое поле `SelectedCard`, в котором хранится объекта типа `IItem` (выбранная карточка)
-Конструктор класса принимает инстант брокера событий.
-У класса есть следующие методы:
-- `setItems`, принимающий в качестве параметра массив объектов типа `IItem`, - позволяет сохранить массив товаров
-- `getItems`, возвращающий массив объектов типа `IItem`, - позволяет получить массив товаров
-- `setItem`, принимающий в качестве параметра объект типа `IItem`, - позволяет сохранить выбранную пользователем карточку товара
-- `getItem`, возвращающий объект типа `IItem`, - позволяет получить выбранную пользователем карточку товара
-- `getItemById`, принимающий в качестве параметра id товара (объект типа string) и возвращающий объект типа `IItem`, - позволяет получить карточку товара по её id
+#### ItemsData
+The ItemsData class is responsible for storing the array of all products (catalog) and the product card selected by the user for viewing. The class has the following fields:
+- protected field `ItemsArray`, which stores an array of objects of type `IItem`
+- protected field `SelectedCard`, which stores an object of type `IItem` (the selected card)
+The class constructor accepts an instance of the event broker.
+The class has the following methods:
+- `setItems`, which takes an array of objects of type `IItem` as a parameter — allows saving the array of products
+- `getItems`, which returns an array of objects of type `IItem` — allows retrieving the array of products
+- `setItem`, which takes an object of type `IItem` as a parameter — allows saving the product card selected by the user
+- `getItem`, which returns an object of type `IItem` — allows retrieving the selected product card
+- `getItemById`, which takes a product id (string) as a parameter and returns an object of type `IItem` — allows retrieving a product card by its id
 
-#### Класс BasketData
-Класс `Basket` отвечает за хранение массива товаров, находящихся в корзине. У класса есть следующие поля:
-- защищённое поле `ItemsArray`, в котором хранится массив объектов типа `IItem`
-Конструктор класса принимает инстант брокера событий.
-У класса есть следующие методы:
-- `getItems`, возвращающий массив объектов типа `IItem`, - позволяет получить массив товаров в корзине
-- `addItem`, принимающий в качестве параметра объект типа `IItem`, - позволяет добавить товар в корзину
-- `deleteItem`, принимающий в качестве параметра id товара, - позволяет удалить товар из корзины
-- `getTotalPrice`, возвращающий число, - позволяет получить суммарную стоимость товаров
-- `getTotalItems`, возвращающий число, - позволяет получить количество товаров в корзине
-- `isInBasket`, принимающий в качестве параметра id товара и возвращающий boolean, - позволяет узнать наличие товара с данным id в корзине
-- `clearBasket`, позволяющий очистить корзину
+#### BasketData
+The Basket class is responsible for storing the array of products in the cart. The class has the following fields:
+- protected field `ItemsArray`, which stores an array of objects of type `IItem`
+The class constructor accepts an instance of the event broker.
+The class has the following methods:
+- `getItems`, which returns an array of objects of type `IItem` — allows retrieving products in the cart
+- `addItem`, which takes an object of type `IItem` — allows adding a product to the cart
+- `deleteItem`, which takes a product id — allows removing a product from the cart
+- `getTotalPrice`, which returns a number — allows retrieving the total price of products
+- `getTotalItems`, which returns a number — allows retrieving the number of products in the cart
+- `isInBasket`, which takes a product id and returns a boolean — allows checking if a product is in the cart
+- `clearBasket`, which clears the cart
 
-#### Класс CustomerData
-Класс `CustomerData` отвечает за хранение данных покупателя. У класса есть следующие поля:
-- поле `email`, в котором хранится массив объектов типа string
-- поле `phone`, в котором хранится массив объектов типа string
-- поле `payment`, которое имеет тип `TPayment` и может принимать одно из трёх значений: 'online', 'cash' или '' (пустая строка)
-- поле `address`, в котором хранится массив объектов типа string
-- поле `formErrors`, которое является объектом типа `Partial<Record<keyof ICustomer, string>>` и хранит ошибки валидации
-Конструктор класса принимает инстант брокера событий.
-У класса есть следующие методы:
-- `setField`, принимающий в качестве параметров один из ключей объекта `ICustomer` и значение типа string, - позволяет сохранить данные покупателя
-- `getUserData`, возвращающий объект типа `ICustomer`, - позволяет получить данные покупателя
-- `validateData`, возвращающий объект `formErrors`, который содержит ошибки валидации
-- `clearData`, позволяющий очистить данные покупателя, которые сохранены в модели
+#### CustomerData
+The CustomerData class is responsible for storing customer data. The class has the following fields:
+- field `email`, which stores a value of type string
+- field `phone`, which stores a value of type string
+- field `ayment`, which has type `TPayment` and can take one of three values: 'online', 'cash', or '' (empty string)
+- field `address`, which stores a value of type string
+- field `formErrors`, which is an object of type `Partial<Record<keyof ICustomer, string>>` and stores validation errors
+The class constructor accepts an instance of the event broker.
+The class has the following methods:
+- `setField`, which takes one of the keys of `ICustomer` and a string value — allows saving customer data
+- `getUserData`, which returns an object of type `ICustomer` — allows retrieving customer data
+- `validateData`, which returns a `formErrors` object containing validation errors
+- `clearData`, which clears the stored customer data
 
-### Слой представления
-Все классы представления отвечают за отображение внутри контейнера (DOM-элемента) передаваемых в них данных.
+### View Layer
+All view classes are responsible for rendering the passed data inside a container (DOM element).
 
-#### Базовый Класс Component
-Класс `Component` является базовым для всех классов представления. В дженерик принимает тип объекта, в котором данные будут передаваться в метод render для отображения данных в компоненте. В конструктор принимает элемент разметки, являющийся основным родительским контейнером компонента. Содержит метод render, отвечающий за сохранение полученных в параметре данных в полях компонентов через их сеттеры, возвращает обновленный контейнер компонента.
+#### Base Class Component
+The `Component` class is the base for all view classes. It takes a generic type representing the data passed into the render method for displaying in the component. The constructor accepts a markup element that acts as the root container of the component. It contains a render method that saves the received data into component fields via setters and returns the updated container.
 
-#### Класс Header
-Класс `Header` отвечает за отображение шапки сайта. Устанавливает значение счётчика корзины и устанавливает слушатель на значок корзины.
-Поля класса:
-- counterElement: HTMLElement - элемент счётчика
-- basketButton: HTMLButtonElement - элемент корзины
-Метод класса:
-- set counter(value: number) - устанавливает значение счётчика
+#### Header
+The `Header` class is responsible for rendering the site header. It sets the cart counter value and attaches a listener to the cart icon.
+Fields:
+- counterElement: HTMLElement - counter element
+- basketButton: HTMLButtonElement - cart element
+Method:
+- set counter(value: number) - sets the counter value
 
-#### Класс Gallery
-Класс `Gallery` отвечает за отображение списка карточек товаров (каталога).
-Поле класса:
-- catalogElement: HTMLElement - элемент каталога
-Методы класса:
-- set catalog(items: HTMLElement[]) - устанавливает в контейнер элементы карточек, переданные в виде массива HTML-элементов
-- set locked(value: boolean) - позволяет блокировать и разблокировать прокрутку страницы при открытии модального окна
+#### Gallery
+The `Gallery` class is responsible for rendering the list of product cards (catalog).
+Field:
+- catalogElement: HTMLElement - catalog element
+Methods:
+- set catalog(items: HTMLElement[]) — inserts card elements into the container
+- set locked(value: boolean) - locks/unlocks page scrolling when a modal window is open
 
-#### Класс Modal
-Класс `Modal` отвечает за отображение модального окна, содержимое которого может быть разным, в зависимости от выбранного для отображения из разметки шаблона. Устанавливает слушатель на значок закрытия модального окна и на нажатие на оверлей.
-Поля класса:
-- contentElement: HTMLElement - элемент модального окна
-- closeButton: HTMLButtonElement - кнопка закрытия модального окна
-Методы класса:
-- set content(item: HTMLElement) - устанавливает в контейнер переданный HTML-элемент
-- open() - отвечает за открытие модального окна и генерирует соответствующее событие
-- close() - отвечает за закрытие модального окна и генерирует соответствующее событие
-- render() - расширяет метод render базового класса, добавляя открытие модального окна
+#### Modal
+The `Modal` class is responsible for rendering a modal window, the content of which may vary depending on the selected template. It attaches listeners to the close button and overlay clicks.
+Fields:
+- contentElement: HTMLElement - modal window element
+- closeButton: HTMLButtonElement - modal window close button
+Methods:
+- set content(item: HTMLElement) - inserts content into the container
+- open() - opens the modal window and emits a corresponding event
+- close() - closes the modal window and emits a corresponding event
+- render() - extends render method of base class by adding the modal window opening
 
-#### Класс Success
-Класс `Success` отвечает за отображение окна успешной покупки. Устанавливает слушатель на кнопку продолжения покупок.
-Поля класса:
+#### Success
+The `Success` class is responsible for displaying the successful purchase window. It attaches a listener to the continue button.
+Fields:
 - descriptionElement: HTMLElement
 - closeButton: HTMLButtonElement
-Метод класса:
-- set total(value: number) - устанавливает сообщение о сумме совершённой покупки
+Method:
+- set total(value: number) - sets the message with purchase total price
 
-#### Класс Basket
-Класс `Basket` отвечает за отображение корзины с выбранными товарами. Позволяет отображать список карточек товаров и суммарную стоимость товаров в корзине.
-Поля класса:
+#### Basket
+The `Basket` class is responsible for displaying the cart with selected products. It allows displaying a list of product cards and the total cost of the products in the cart.
+Fields:
 - contentElement: HTMLElement
 - basketButton: HTMLButtonElement
 - priceElement: HTMLElement
-Методы класса:
-- set content(items: HTMLElement[]) - устанавливает в контейнер переданный в параметре массив HTML-элементов (карточек товаров) или (в случае пустого массива) выводит сообщение об отсутствии товаров в корзине
-- set price(value: number) - устанавливает значение суммарной стоимости корзины
+Methods:
+- set content(items: HTMLElement[]) - sets into the container the array of HTML elements (product cards) passed as a parameter, or (in the case of an empty array) displays a message about the absence of products in the cart
+- set price(value: number) - sets the total price value of the cart
 
-#### Класс Card
-Класс `Card` является наследуемым для классов `GalleryItem`, `ModalItem` и `BasketItem`, которые отвечают за отображение карточки товара в разных вариантах.
-Поля класса:
+#### Card
+The `Card` class is a base class for `GalleryItem`, `ModalItem` and `BasketItem`, which are responsible for displaying a product card in different variants.
+Fields:
 - itemTitle: HTMLElement
 - itemPrice: HTMLElement
 - itemId: string
-Методы класса:
-- set title(value: string) - устанавливает заголовок карточки (название товара) 
-- set price(value: number | null) - устанавливает цену товара, может принимать число или null для бесценного товара
-- set id(value: string) - устанавливает id товара, чтобы передавать его при генерации событий в дочерних классах
+Methods:
+- set title(value: string) - sets the card title (product name)
+- set price(value: number | null) - sets the product price; can take a number or null for a free product
+- set id(value: string) - sets the product id in order to pass it when generating events in child classes
 
-#### Класс GalleryItem
-Класс `GalleryItem` наследует класс `Card` и отвечает за отображение карточки товара в каталоге товаров. Устанавливает слушатель на клик по карточке.
-Поля класса:
+#### GalleryItem
+The `GalleryItem` class inherits from `Card` and is responsible for displaying a product card in the product catalog. It sets a listener for clicking on the card.
+Fields:
 - itemImage: HTMLImageElement
 - itemCategory: HTMLElement
-Методы класса:
-- set image(value: string) - устанавливает изображение товара
-- set category(value: string) - устанавливает категорию товара
+Methods:
+- set image(value: string) - sets the product image
+- set category(value: string) - sets the product category
 
-#### Класс ModalItem
-Класс `ModalItem` наследует класс `GalleryItem` и отвечает за отображение карточки товара в модальном окне. Устанавливает слушатель на клик по кнопке добавления в корзину.
-Поля класса:
+#### ModalItem
+The `ModalItem` class inherits from `GalleryItem` and is responsible for displaying a product card in a modal window. It sets a listener for clicking the add-to-cart button.
+Fields:
 - itemDescription: HTMLElement
 - itemButton: HTMLButtonElement
-Методы класса:
-- set description(value: string) - устанавливает описание товара
-- set buttonText(value: string) - устанавливает текст кнопки для добавления/удаления товара из корзины в зависимости от его наличия там.
-- set price(value: number | null) - расширяет метод price родительского класса, делая недоступной кнопку добавления в корзину для бесценного товара
+Methods:
+- set description(value: string) - sets the product description
+- set buttonText(value: string) - sets the button text for adding/removing a product from the cart depending on its presence there
+- set price(value: number | null) - extends the parent price method, making the add-to-cart button unavailable for a null-price product
 
-#### Класс BasketItem
-Класс `BasketItem` наследует класс `Card` и отвечает за отображение карточки товара в корзине. Устанавливает слушатель на кнопку удаления товара.
-Поля класса:
+#### BasketItem
+The `BasketItem` class inherits from `Card` and is responsible for displaying a product card in the cart. It sets a listener on the remove button.
+Fields:
 - itemButton: HTMLButtonElement
 - itemIndex: HTMLElement
-Метод класса:
-- set itemNumber(value: number) - устанавливает порядковый номер товара в корзине
+Method:
+- set itemNumber(value: number) - sets the sequential number of the product in the cart
 
-#### Класс Form
-Класс `Form` является наследуемым для классов `OrderForm` и `ContactForm`, которые отвечают за отображение форм покупки. Устанавливает слушатель события input на поля формы и слушатель клика на отправку формы.
-Поля класса:
+#### Form
+The `Form` class is a base class for `OrderForm` and `ContactForm`, which are responsible for displaying purchase forms. It sets an input event listener on form fields and a click listener on form submission.
+Fields:
 - buttonElement: HTMLButtonElement
 - errorElement: HTMLElement
-Методы класса:
-- onInputChange(field: keyof T, value: string) - генерирует события с разными названиями и параметрами, в зависимости от передаваемых ему параметров
-- set valid(value: boolean) - изменяет состояние кнопки в зависимости от валидации формы
-- set errors(value: string[]) - выводит текст ошибок при неправильном заполнении формы
-- render(state: Partial<T> & Partial<IForm>) - расширяет метод render базового класса, добавляя вывод сообщений об ошибках
+Methods:
+- onInputChange(field: keyof T, value: string) - generates events with different names and parameters depending on the passed arguments
+- set valid(value: boolean) - changes the button state depending on form validation
+- set errors(value: string[]) - displays error text when the form is filled incorrectly
+- render(state: Partial<T> & Partial<IForm>) - extends the base class render method by adding the display of error messages
 
-#### Класс OrderForm
-Класс `OrderForm` наследует класс `Form` и отвечает за отображение формы заказа. Устанавливает слушатели на кнопки выбора типа оплаты.
-Поля класса:
+#### OrderForm
+The `OrderForm` class inherits from `Form` and is responsible for displaying the order form. It sets listeners on the buttons for selecting the payment type.
+Fields:
 - cardButtonElement: HTMLButtonElement
 - cashButtonElement: HTMLButtonElement
 - adressInput: HTMLInputElement
-Методы класса:
-- changeButtonState(isCard: boolean, isCash: boolean) - визуализирует выбранный тип оплаты
-- set address(value: string) - устанавливает адрес доставки
+Methods:
+- changeButtonState(isCard: boolean, isCash: boolean) - visualises the selected payment type
+- set address(value: string) - sets the delivery address
 
-#### Класс ContactForm
-Класс `ContactForm` наследует класс `Form` и отвечает за отображение контактной формы.
-Поля класса:
+#### ContactForm
+The `ContactForm` class inherits from `Form` and is responsible for displaying the contact form.
+Fields:
 - emailInput: HTMLInputElement
 - phoneInput: HTMLInputElement
-Методы класса:
-- set email(value: string) - устанавливает email пользователя
-- set phone(value: string) - устанавливает номер телефона пользователя
+Methods:
+- set email(value: string) - sets the user email
+- set phone(value: string) - sets the user phone number
 
-### Слой коммуникации
+### Communication Layer
 
-#### Класс AppApi
-Класс `AppApi` наследует базовый класс `Api` и отвечает за работу с сервером.
+#### AppApi
+The `AppApi` class inherits from the base `Api` class and is responsible for working with the server.
 
-### Взаимодействие компонентов
-Код презентера, описывающего связь данных и представления, будет содержаться в основном скрипте приложения `index.ts`. Взаимодействие осуществляется за счёт событий, генерируемых с помощью брокера событий, и обработчиков этих событий.
+### Component Interaction
+The presenter code, describing the connection between data and presentation, is located in the main application script `index.ts`. Interaction is carried out through events generated using the event broker and handlers of these events.
 
-В работе используется событийно-ориентированный подход. Список событий, которые могут генерироваться в системе:
+An event-driven approach is used in the work. The list of events that can be generated in the system:
 
-*События изменения данных (генерируются классами модели данных)*
-- `items:changed` - добавление списка товаров в модель данных
-- `card:selected` - изменение открываемой в модальном окне карточки
-- `basket:changed` - изменение состояния корзины
-- `payment:changed` - изменение способа оплаты
+*Data Change Events (generated by data model classes)*
+- `items:changed` - adding a list of products to the data model
+- `card:selected` - changing the card opened in the modal window
+- `basket:changed` - changing the state of the cart
+- `payment:changed` - changing the payment method
 
-*События, возникающие при взаимодействии пользователя с интерфейсом (генерируются классами, отвечающими за представление)*
-- `card:open` - выбор карточки для отображения в модальном окне
-- `selectedItem:basketAction` - изменение состояния товара в корзине
-- `basket:open` - открытие модального окна корзины
-- `basket:submit` - выбор оформления заказа товаров, находящихся в корзине
-- `order.*.changed` - изменение одного из полей формы order
-- `order:submit` - подтверждение формы order
-- `contacts.*.changed` - изменение одного из полей формы contacts
-- `contacts:submit` - подтверждение формы contacts (подтверждение оплаты)
-- `modal:open` - открытие модального окна
-- `modal:close` - закрытие модального окна
+*User Interaction Events (generated by view classes*
+- `card:open` - selecting a card to display in a modal window
+- `selectedItem:basketAction` - changing the state of a product in the cart
+- `basket:open` - opening the cart modal window
+- `basket:submit` - selecting checkout of the products in the cart
+- `order.*.changed` - changing one of the fields of the order form
+- `order:submit` - confirming the order form
+- `contacts.*.changed` - changing one of the fields of the contacts form
+- `contacts:submit` - confirming the contacts form (payment confirmation)
+- `modal:open` - opening a modal window
+- `modal:close` - closing a modal window
 
-Пример взаимодействия:
-1. Пользователь нажимает на удаление товара из корзины в модальном окне корзины. Класс `BasketItem` реагирует на действие пользователя и генерирует событие `selectedItem:basketAction`.
-2. Презентер обрабатывает событие и вызывает метод `deleteItem` класса `BasketData`.
-3. Модель изменяет данные в поле `ItemsArray` класса `BasketData` и генерирует событие `basket:changed`.
-4. Презентер обрабатывает событие, вызывает рендер класса `Header` и рендер класса `Basket`, передавая в них данные из модели.
-5. Классы `Header` и `Basket` перерисовываются, отображая обновлённые данные.
+Interaction Example:
+1. The user clicks on removing a product from the cart in the cart modal window. The `BasketItem` class reacts to the user action and generates the `selectedItem:basketAction` event.
+2. The presenter processes the event and calls the `deleteItem` method of the `BasketData` class.
+3. The model changes the data in the `ItemsArray` field of the `BasketData` class and generates the `basket:changed` event.
+4. The presenter processes the event and calls the renders of the `Header` and the `Basket` classes, passing data from the model to them.
+5. The `Header` and `Basket` classes are re-rendered, displaying the updated data.
